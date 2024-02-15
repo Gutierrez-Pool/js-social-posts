@@ -60,7 +60,8 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": null
+            // "image": null
+            "image": "https://e7.pngegg.com/pngimages/184/821/png-clipart-mangalore-united-states-management-computer-science-business-profile-angle-white.png"
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -85,7 +86,6 @@ const posts = [
 
 const postsElement = document.querySelector(".posts-list");
 
-console.log (postsElement);
 
 posts.forEach(function(currentPost) {
 
@@ -110,18 +110,43 @@ posts.forEach(function(currentPost) {
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <a class="like-button  js-like-button" href="#" data-postid="${currentPost.id}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${currentPost.likes}</b> persone
+                    Piace a <b id="like-counter-${currentPost.id}" class="js-likes-counter">${currentPost.likes}</b> persone
                 </div>
             </div> 
         </div>            
     </div>
     `;
-
-    console.log (currentPost.id);
+    
+    
 });
+
+
+
+
+// Milestone 3 - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
+
+let likesElement = document.querySelectorAll(".js-likes");
+
+let LikeButton = document.querySelector(".js-like-button");
+
+let likesNumber = document.querySelector(".js-likes-counter");
+
+likesElement.forEach(((test, index) => {
+
+    test.addEventListener("click", () => {
+
+        LikeButton.classList.add("like-button--liked");
+
+        likesNumber.innerHTML += 1;
+        
+        console.log (likesNumber);
+        console.log (index);
+    });
+
+}));
