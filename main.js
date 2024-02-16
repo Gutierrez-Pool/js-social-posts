@@ -87,11 +87,14 @@ const posts = [
 const postsElement = document.querySelector(".posts-list");
 
 
-posts.forEach(function(currentPost) {
+posts.forEach(function (currentPost) {
 
-    postsElement.innerHTML += `
+
+    // CREAZIONE ELEMENTI HTML
+    const newPost = document.createElement("div");
+
+    newPost.innerHTML = `
     
-    <div class="post">
         <div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
@@ -120,33 +123,58 @@ posts.forEach(function(currentPost) {
                 </div>
             </div> 
         </div>            
-    </div>
     `;
-    
-    
+
+    newPost.className = "post";
+
+    postsElement.append(newPost);
+
+
+
+    // Milestone 3 - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
+
+    // GESTIONE BUTTON LIKE
+
+    likedPosts = [];
+        
+    const currentLikeButton = document.querySelector(`a[data-postid="${currentPost.id}"]`);
+
+
+    currentLikeButton.addEventListener("click", (e) => {
+
+        e.preventDefault();
+
+        if ( ! likedPosts.includes(currentPost.id)) {
+
+            likedPosts.push(currentPost.id);
+
+            currentLikeButton.classList.add("like-button--liked");
+
+            currentPost.likes++;
+
+            const currentLikeCounter = document.querySelector(`#like-counter-${currentPost.id}`);
+            currentLikeCounter.innerText = currentPost.likes;
+        }
+        console.log (likedPosts);
+    });
+
+
 });
 
 
+// let likesElement = document.querySelectorAll(".js-likes");
 
+// let likesNumber = document.querySelector(".js-likes-counter");
 
-// Milestone 3 - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo. Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
+// likesElement.forEach(((test, index) => {
 
-let likesElement = document.querySelectorAll(".js-likes");
+//     test.addEventListener("click", () => {
 
-let LikeButton = document.querySelector(".js-like-button");
+//         LikeButton.classList.add("like-button--liked");
 
-let likesNumber = document.querySelector(".js-likes-counter");
+//         likesNumber.innerHTML += 1;
 
-likesElement.forEach(((test, index) => {
+//         console.log(likesNumber);
+//     });
 
-    test.addEventListener("click", () => {
-
-        LikeButton.classList.add("like-button--liked");
-
-        likesNumber.innerHTML += 1;
-        
-        console.log (likesNumber);
-        console.log (index);
-    });
-
-}));
+// }));
